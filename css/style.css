@@ -1,0 +1,62 @@
+#holder {
+	border: 5px SandyBrown solid;
+	padding: 10px;
+	padding-left:20px;
+	height:210px;
+	width:420px;
+	background-color: LightCyan ;
+	margin-top:20px;
+	text-align:left;
+	font-size: 22px;
+}
+
+#search_result {
+	background-color:lightblue;
+	width:400px;
+	
+}
+
+#suggest {
+	width:150px;
+	background-color:white;
+	
+}
+
+#propic {
+	border: 3px solid black;
+	border-radius:5px;
+	padding:1px;
+	width:220px;
+	height:220px;
+	
+}
+
+#navbar {
+	text-align:right;
+	font-size:20px;
+	
+}
+
+#edit-details {
+	border: 5px SandyBrown solid;
+	padding: 10px;
+	padding-left:20px;
+	height:250px;
+	width:420px;
+	background-color: LightCyan ;
+	margin-top:20px;
+	text-align:left;
+	font-size: 22px;
+}
+
+#login {
+	background-color : PeachPuff;
+	height:350px;
+	width:400px;
+	border-radius:15px;
+	border: 12px Orange solid;
+}
+
+td{
+	padding:5px;
+}

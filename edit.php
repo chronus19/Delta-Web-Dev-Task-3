@@ -11,6 +11,8 @@ function len_between($str,$min,$max) {
 }
 
     if($_SERVER['REQUEST_METHOD']=='POST') {
+		
+		// Redirect to login page if not logged in 
 	
 	    if (empty($_SESSION['logged_in']) || empty($_SESSION['username'])){
 			header('Location: index.php');
@@ -18,6 +20,8 @@ function len_between($str,$min,$max) {
 		
 		if ($_SESSION['logged_in'] !=1 )
 			header('Location: index.php');
+		
+		// Validate data
 		
 		if (!len_between($_POST['name'],4,30)) {
 		$errormsg = 'Name should be 4 to 30 characters long.';
@@ -51,6 +55,7 @@ function len_between($str,$min,$max) {
 			    }
 				
 			else{
+				// Adding image data to the SQL query
 				$image = addslashes(file_get_contents($_FILES['propic']['tmp_name']));
 				$query .= ", propic='{$image}' ";
 				}
@@ -61,15 +66,17 @@ function len_between($str,$min,$max) {
 	$result = mysqli_query($db,$query);
 		
 	if(! $result) {
+		// If query failed, redirect to edit page
 		header('Location: edit.php');
 	}
+	
 	header("Location: dashboard.php");
 		
 	}
 	}
 	
+	// If not 'POST', then :-
     else {
-		
 	
 	if ($_SESSION['logged_in'] != 1 || empty($_SESSION['username'])) 
 		header('Location: index.php');
@@ -87,6 +94,7 @@ function len_between($str,$min,$max) {
     die(1);
 	}
 	
+	// To populate the fields in the form with existing user details
 	$result = mysqli_query($db,"Select name,email,contact from user where username='{$username}';") ;
     
 	$result = mysqli_fetch_assoc($result);
@@ -107,59 +115,57 @@ function len_between($str,$min,$max) {
 </head>
 <body style="background-color: Moccasin;">
 
-<div id='navbar' >
-<a href='dashboard.php'>Dashboard </a>
-&nbsp;&nbsp;&nbsp;
-<a href='logout.php'>Log Out </a>
-</div>
+	<div id='navbar' >
+		<a href='dashboard.php'>Dashboard </a>
+		&nbsp;&nbsp;&nbsp;
+		<a href='logout.php'>Log Out </a>
+	</div>
 
 <center>
-<h2> Welcome <?php echo $result['name']  ?></h2>
+	<h2> Welcome <?php echo $result['name']  ?></h2>
+	
+	<span id='msg' style='color:red'>
+	<?php 
+	if (!empty($errormsg))
+		echo $errormsg;
+	?>
+	</span> <br/><br/>
 
-<span id='msg' style='color:red'>
+	<form name='myform' action='edit.php' method='POST' enctype="multipart/form-data" >
 
-<?php 
-if (!empty($errormsg))
-	echo $errormsg;
-?>
+	<div id='edit-details'>
 
-</span> <br/><br/>
+	<table>
 
-<form name='myform' action='edit.php' method='POST' enctype="multipart/form-data" >
+	<tr>
+		<td>Name :- </td>
+		<td><input type='text' id='name' name='name' value='<?php echo $result['name']  ?>' /></td>
+	</tr>
 
-<div id='edit-details'>
+	<tr>
+		<td> E-Mail :- </td>
+		<td> <input type='text' id='email' name='email' value='<?php echo $result['email']  ?>' /> </td>
+	</tr>
 
-<table>
+	<tr>
+		<td> Contact :- </td>
+		<td><input type='text' id='contact' name='contact' value='<?php echo $result['contact']  ?>' /> </td>
+	</tr>
 
-<tr>
-<td>Name :- </td>
-<td><input type='text' id='name' name='name' value='<?php echo $result['name']  ?>' /></td>
-</tr>
+	<tr>
+		<td> Profile Picture :- </td>
+		<td><p style='font-size:12px'> Do not select an image to keep the previous image.</p>
+		<input type="file" accept='image/*' name="propic" /> <br>
+		</td>
+	</tr>
 
-<tr>
-<td> E-Mail :- </td>
-<td> <input type='text' id='email' name='email' value='<?php echo $result['email']  ?>' /> </td>
-</tr>
-
-<tr>
-<td> Contact :- </td>
-<td><input type='text' id='contact' name='contact' value='<?php echo $result['contact']  ?>' /> </td>
-</tr>
-
-<tr>
-<td> Profile Picture :- </td>
-<td>
-<p style='font-size:12px'> Do not select an image to keep the previous image.</p>
-<input type="file" accept='image/*' name="propic" /> <br>
-</td>
-</tr>
-
-</table>
-<br/>
+	</table>
+	<br/>
 	<center><button type='button' onclick='validate_edit_details()'>UPDATE</button></center>
-</div>
+	
+	</div>
 
-</form>
+	</form>
 
 </center>
 

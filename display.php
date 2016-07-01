@@ -2,13 +2,14 @@
 
 session_start();
 $result = null;
+
+// Redirect to login page if not logged in
 if ( $_SESSION['logged_in'] != 1 || empty($_SESSION['username'])) 
 	header('Location: index.php');
 
 if ($_SERVER['REQUEST_METHOD']=='GET' and !empty($_GET['user']) ) {
 	
 		$user = $_GET['user'];
-			
 		$db_user = "root";
 		$db_passwd = "password";
 		$database = "delta";
@@ -22,15 +23,15 @@ if ($_SERVER['REQUEST_METHOD']=='GET' and !empty($_GET['user']) ) {
 	
 	    $result = mysqli_query($db,"Select username,email,contact,name,propic from user where username='{$user}';") ;
 		
+		// If query is empty, redirect to search.php
+		if ($result->num_rows != 1) 
+			header('Location: search.php');
+		
 		$result = mysqli_fetch_assoc($result);
 	
+		// Generate image file data
 		$imagefile = "<img id='propic' src=data:image/png;base64," . base64_encode($result['propic']).">" ;
 }
-
-else {
-	header('Location: index.php');
-}
-
 
 ?>
 
@@ -48,49 +49,45 @@ else {
 </head>
 <body style="background-color: Moccasin;">
 
-<div id='navbar' >
-<a href='dashboard.php'>Dashboard </a>
-&nbsp;&nbsp;&nbsp;
-<a href='search.php'>Search friends </a>
-&nbsp;&nbsp;&nbsp;
-<a href='logout.php'>Log Out </a>
-</div>
+	<div id='navbar' >
+		<a href='dashboard.php'>Dashboard </a>
+		&nbsp;&nbsp;&nbsp;
+		<a href='search.php'>Search friends </a>
+		&nbsp;&nbsp;&nbsp;
+		<a href='logout.php'>Log Out </a>
+	</div>
 
-<br>
-<center>
+	<br>
+	<center>
 
-<h2> You searched for :- <?php echo $result['name']  ?> </h2>
-<?php echo $imagefile ; ?>
+		<h2> You searched for :- <?php echo $result['name']  ?> </h2>
+		<?php echo $imagefile ; ?>
 
-<div id='holder'>
-<table>
-<tr>
-<td>Username :- </td>
-<td> <?php echo $result['username']  ?>  </td>
-</tr>
+		<div id='holder'>
+			<table>
+			<tr>
+				<td>Username :- </td>
+				<td> <?php echo $result['username']  ?>  </td>
+			</tr>
 
-<tr>
-<td>Name :- </td>
-<td><?php echo $result['name']  ?></td>
-</tr>
+		<tr>
+			<td>Name :- </td>
+			<td><?php echo $result['name']  ?></td>
+		</tr>
 
-<tr>
-<td> E-Mail :- </td>
-<td> <?php echo $result['email']  ?> </td>
-</tr>
+		<tr>
+			<td> E-Mail :- </td>
+			<td> <?php echo $result['email']  ?> </td>
+		</tr>
 
-<tr>
-<td> Contact :- </td>
-<td><?php echo $result['contact']  ?> </td>
-</tr>
-</table>
-  <br> 
+		<tr>
+			<td> Contact :- </td>
+			<td><?php echo $result['contact']  ?> </td>
+		</tr>
+	</table>
+    <br> 
 
-
-</div>
-
-
-
+	</div>
 
 </center>
 

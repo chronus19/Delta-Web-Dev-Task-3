@@ -5,7 +5,7 @@ if (isset($_SESSION['logged_in']))
     if ($_SESSION['logged_in'] == 1) 	
 		header("Location: dashboard.php");
 
-	
+// Below code is for using without using AJAX for form subimssion
 /*
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
@@ -60,37 +60,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <link href="css/style.css" rel="stylesheet">
 <script src="js/script.js"></script>
 </head>
+
 <body style='background-color:Navy'>
 
 <center>
-
 <br> 
+	
 <div id='login'>
-<h1> Login </h1>
-<br>
+	<h1> Login </h1>
+	<br>
 
-<span id='msg' style='color:red'>
-<!-- For displaying error message, if invalid credentials. -->
-</span> <br/><br/>
+	<span id='msg' style='color:red'>
+	<!-- For displaying error message, if invalid credentials. -->
+	</span> <br/><br/>
 
-<form name='myform' method='POST' action='login.php'>
-<label for='username'>Username :- </label>
-<input type='text' name="username" id='username' r> <br> <br>
+	<form name='myform' method='POST' action='login.php'>
+		<label for='username'>Username :- </label>
+		<input type='text' name="username" id='username' r> <br> <br>
 
-<label for='passwd'>Password :- </label>
-<input type="password" name="password" id='password' required /> <br><br>
+		<label for='passwd'>Password :- </label>
+		<input type="password" name="password" id='password' required /> <br><br>
 
-<button type="button" onclick='login_user()'>LOGIN</button> 
-<!-- <input type='submit' value='SUBMIT' />  -->
+		<button type="button" onclick='login_user()'>LOGIN</button> 
+		<!-- <input type='submit' value='SUBMIT' />  -->
 
-</form>
-<br>
-<h3>
-<a href='register.php'>New user? Register Here</a>
-</h3>
+	</form>
+	<br>
+	<h3><a href='register.php'>New user? Register Here</a></h3>
 
 
 </div>
+
 </center>
 
 </body>

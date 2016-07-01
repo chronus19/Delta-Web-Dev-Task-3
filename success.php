@@ -1,5 +1,7 @@
 <?php
     
+	// This page will be displayed only once, after a successful registration.
+	
 	$db_user = "root";
 	$db_passwd = "password";
 	$database = "delta";
@@ -22,6 +24,8 @@
     
 	$result = mysqli_query($db,"SELECT name,propic from user where username='{$user}'; " );
 	$data = mysqli_fetch_assoc($result);
+	
+	// Generate image data
 	$imagefile = "<img style='height:180px; width=180px;' src=data:image/png;base64," . base64_encode($data['propic']).">" ;
 	mysqli_close($db);
 
@@ -36,16 +40,16 @@
 
 </head>
 <body style = 'background-color: lightgreen;'>
-<br>
-<center>
-	<h2> Registered Successfully !! </h2><br>
-	<?php  echo $data['name'] . "<br/><br/>";
-		   echo $imagefile;
-	?>
+	<br>
 	
+	<center>
+		<h2> Registered Successfully !! </h2><br>
+		<?php  echo $data['name'] . "<br/><br/>";
+			echo $imagefile;
+		?>
 	<br>
 	<h3> <a href = 'index.php'>Login here</a>
-</center>
+	</center>
 
 </body>
 

@@ -1,4 +1,9 @@
-
+function len_between(str,min,max) {
+	if (str.length < min || str.length > max) {
+		return 0;
+	}
+	return 1;
+}	
 
 function validate_new_user_data() {
 	
@@ -43,6 +48,7 @@ function validate_new_user_data() {
 		return;
 	}
 	
+	// Using AJAX for form submission
 	var ajax = new XMLHttpRequest();
 	ajax.open("POST",'register.php',true);
 	ajax.onreadystatechange = function() {
@@ -82,33 +88,13 @@ function validate_edit_details() {
 		return;
 	}
 	
-	document.myform.submit();
-	
-}
-
-function len_between(str,min,max) {
-	console.log(str.length);
-	if (str.length < min || str.length > max) {
-		return 0;
+	var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if (!filter.test(email)) {
+		document.getElementById('msg').innerHTML = 'Please provide a valid email address';
+		return;
 	}
-	return 1;
-}	
 
-function new_user() {
-	var ajax = new XMLHttpRequest();
-	ajax.open("POST",'register.php',true);
-	ajax.onreadystatechange = function() {
-		if (ajax.readyState == 4 && ajax.status == 200) {
-			if ( ajax.responseText === 'SUCCESS' )
-				console.log("Registered Successfully !!")
-			else
-				document.getElementById('msg').innerHTML = 'Not registered !!';
-			}
-		}
-		
-	var new_user = new FormData(document.myform);
-	ajax.send(login_details);
-	console.log("Sent new user details !!");
+	document.myform.submit();
 	
 }
 
@@ -129,10 +115,11 @@ function login_user() {
 		
 	var login_details = new FormData(document.myform);
 	ajax.send(login_details);
-	console.log("Sent");
 	
 }
 
+// Function for creating as-you-type suggestions using AJAX
+	
 function suggest() {
 	
 	var ajax = new XMLHttpRequest();
